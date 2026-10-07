@@ -243,6 +243,11 @@ function App() {
   }
 
   function addToCart(product) {
+    const currentQuantity = cartItems.find((item) => item.id === product.id)?.quantity || 0;
+    if (!Number.isInteger(product.stock) || currentQuantity >= product.stock) {
+      showToast("No more stock available for this product");
+      return;
+    }
     const command = new AddToCartCommand(product);
 
     runCartCommand(command);
@@ -259,6 +264,10 @@ function App() {
 
   function increaseQuantity(productId) {
     const product = cartItems.find((item) => item.id === productId);
+    if (!product || !Number.isInteger(product.stock) || product.quantity >= product.stock) {
+      showToast("No more stock available for this product");
+      return;
+    }
     const command = new IncreaseQuantityCommand(productId);
 
     runCartCommand(command);
