@@ -1,5 +1,5 @@
 function validateCart(order) {
-  if (!order.cartItems || order.cartItems.length === 0) {
+  if (!order || !Array.isArray(order.cartItems) || order.cartItems.length === 0) {
     return {
       isValid: false,
       message: "Cart is empty",
@@ -10,7 +10,11 @@ function validateCart(order) {
 }
 
 function validateStock(order) {
-  const outOfStockItem = order.cartItems.find((item) => item.stock === 0);
+  const invalidItem = order.cartItems.some((item) => !item || !Number.isInteger(item.quantity) || item.quantity <= 0 || !Number.isFinite(item.price) || item.price < 0);
+  if (invalidItem) {
+    return { isValid: false, message: "Cart contains an invalid item" };
+  }
+  const outOfStockItem = order.cartItems.find((item) => !Number.isInteger(item.stock) || item.stock < item.quantity);
 
   if (outOfStockItem) {
     return {
@@ -40,7 +44,7 @@ function validateDelivery(order) {
 
   const { fullName, phone, city, address } = order.delivery;
 
-  if (!fullName || !phone || !city || !address) {
+  if ([fullName, phone, city, address].some((value) => typeof value !== "string" || !value.trim())) {
     return {
       isValid: false,
       message: "Please complete delivery information",
