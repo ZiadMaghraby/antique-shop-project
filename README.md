@@ -1,16 +1,44 @@
-# React + Vite
+# Antique Shop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React storefront for browsing antiques, managing a cart, and walking through a demonstration checkout.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Use Node.js 22.12 or newer and npm. From the repository root:
 
-## React Compiler
+```sh
+npm ci
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Open the local URL printed by Vite. Choose **Continue as Guest** to explore without registering.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Product collections, product details, and price sorting.
+- Cart quantities and order summaries.
+- Fragile packaging and luxury insurance calculations.
+- Theme and language controls.
+
+## Commands
+
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the development server. |
+| `npm run build` | Generate the production bundle in `dist/`. |
+| `npm run preview` | Preview that bundle locally. |
+| `npm run lint` | Run the configured ESLint checks. |
+
+## Source map
+
+- `src/pages/App.jsx`: routes, session state, cart actions, and checkout.
+- `src/pages/`: storefront screens.
+- `src/patterns/`: product factory, cart commands, checkout validation and pricing decorators.
+- `src/context/`: shared theme and language state.
+- `public/data.json`: sample inventory.
+
+## Demo scope
+
+Authentication uses browser local storage, including demo passwords; use disposable sample credentials only. Checkout creates an in-browser order summary, not a payment transaction. Cart state is held in memory and resets on reload. A production version needs server-side authentication, authorization, inventory checks, and payment processing.
+
+This repository is ZiadMaghraby's fork of [the collaborative project](https://github.com/ABDELRAHMAN-MAHM0UD/antique-shop-project).
