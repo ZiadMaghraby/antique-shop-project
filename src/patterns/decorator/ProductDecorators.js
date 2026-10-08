@@ -53,3 +53,11 @@ export function decorateProductForCheckout(product) {
 export function decorateCartItems(cartItems) {
   return cartItems.map((item) => decorateProductForCheckout(item));
 }
+
+// Use one quote for both the review screen and the completed demo order.
+export function calculateCartTotals(cartItems) {
+  const items = decorateCartItems(cartItems);
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = items.reduce((sum, item) => sum + item.finalTotal, 0);
+  return { items, subtotal, servicesTotal: total - subtotal, total };
+}

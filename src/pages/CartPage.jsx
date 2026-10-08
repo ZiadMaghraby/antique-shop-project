@@ -29,6 +29,10 @@ const checkoutCopies = {
     placeOrder: "Place Order",
     back: "Back",
     checkoutNow: "Checkout Now",
+    subtotal: "Items subtotal",
+    services: "Packaging & insurance",
+    fragilePackaging: "Fragile packaging",
+    luxuryInsurance: "Luxury insurance",
   },
 
   ar: {
@@ -57,12 +61,16 @@ const checkoutCopies = {
     placeOrder: "تأكيد الطلب",
     back: "رجوع",
     checkoutNow: "إتمام الطلب",
+    subtotal: "إجمالي المنتجات",
+    services: "التغليف والتأمين",
+    fragilePackaging: "تغليف القطع القابلة للكسر",
+    luxuryInsurance: "تأمين القطع الفاخرة",
   },
 };
 
 function CartPage({
   cartItems,
-  cartTotal,
+  cartSummary,
   decreaseQuantity,
   increaseQuantity,
   removeFromCart,
@@ -116,7 +124,7 @@ function CartPage({
   function placeOrder() {
     handleCheckout({
       items: cartItems,
-      total: cartTotal,
+      total: cartSummary.total,
       delivery: deliveryData,
       paymentMethod,
     });
@@ -392,17 +400,25 @@ function CartPage({
               <div className="story-panel">
                 <span>{t.cart.orderSummary}</span>
                 <h2>{t.cart.total}</h2>
-                <h3>{cartTotal} EGP</h3>
+                <h3>{cartSummary.total} EGP</h3>
 
                 <div className="checkout-summary-list">
-                  {cartItems.map((item) => (
+                  {cartSummary.items.map((item) => (
                     <div key={item.id}>
                       <span>
                         {productName(item.name)} × {item.quantity}
                       </span>
                       <strong>{item.price * item.quantity} EGP</strong>
+                      {item.addOns.map((addOn) => (
+                        <small key={addOn.name}>
+                          {addOn.name === "Fragile Packaging" ? copy.fragilePackaging : copy.luxuryInsurance}
+                          {" × "}{item.quantity}: {addOn.price * item.quantity} EGP
+                        </small>
+                      ))}
                     </div>
                   ))}
+                  <div><span>{copy.subtotal}</span><strong>{cartSummary.subtotal} EGP</strong></div>
+                  <div><span>{copy.services}</span><strong>{cartSummary.servicesTotal} EGP</strong></div>
                 </div>
 
                 {checkoutStep === "cart" && (
