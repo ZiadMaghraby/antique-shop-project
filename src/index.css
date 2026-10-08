@@ -3844,6 +3844,9 @@ html[data-theme="dark"] .category-card.selected strong {
   margin: 24px 0;
 }
 
+.checkout-summary-list > div { flex-wrap: wrap; }
+.checkout-summary-list small { flex-basis: 100%; }
+
 .checkout-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;

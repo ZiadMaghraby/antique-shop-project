@@ -24,7 +24,7 @@ import tableImg from "../assets/products/table.png";
 import { createProduct } from "../patterns/factory/ProductFactory";
 import CartObserver from "../patterns/observer/CartObserver";
 import { validateCheckout } from "../patterns/chain/CheckoutValidationChain";
-import { decorateCartItems } from "../patterns/decorator/ProductDecorators";
+import { calculateCartTotals } from "../patterns/decorator/ProductDecorators";
 import {
   AddToCartCommand,
   ClearCartCommand,
@@ -330,19 +330,7 @@ function App() {
       Example: fragile packaging or luxury insurance.
       The original cart item stays clean, and the decorated item has final price.
     */
-    const decoratedItems = decorateCartItems(cartItems);
-
-    const subtotal = cartItems.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0,
-    );
-
-    const total = decoratedItems.reduce(
-      (sum, item) => sum + item.finalTotal,
-      0,
-    );
-
-    const servicesTotal = total - subtotal;
+    const { items: decoratedItems, subtotal, total, servicesTotal } = calculateCartTotals(cartItems);
     const orderNumber = `AS-${Date.now().toString().slice(-6)}`;
 
     const order = {
@@ -378,10 +366,7 @@ function App() {
     return ["All", ...new Set(uniqueCategories)];
   }, [products]);
 
-  const cartTotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0,
-  );
+  const cartSummary = calculateCartTotals(cartItems);
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -486,7 +471,7 @@ function App() {
             <PageFrame {...pageFrameProps}>
               <CartPage
                 cartItems={cartItems}
-                cartTotal={cartTotal}
+                cartSummary={cartSummary}
                 decreaseQuantity={decreaseQuantity}
                 increaseQuantity={increaseQuantity}
                 removeFromCart={removeFromCart}

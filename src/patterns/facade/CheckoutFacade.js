@@ -1,5 +1,5 @@
-import { validateCheckout } from "../chain/CheckoutValidationChain";
-import { decorateCartItems } from "../decorator/ProductDecorators";
+import { validateCheckout } from "../chain/CheckoutValidationChain.js";
+import { calculateCartTotals } from "../decorator/ProductDecorators.js";
 
 export function createCheckoutOrder({ cartItems, orderDetails = {} }) {
   const orderData = {
@@ -17,19 +17,7 @@ export function createCheckoutOrder({ cartItems, orderDetails = {} }) {
     };
   }
 
-  const decoratedItems = decorateCartItems(cartItems);
-
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-
-  const total = decoratedItems.reduce(
-    (sum, item) => sum + item.finalTotal,
-    0
-  );
-
-  const servicesTotal = total - subtotal;
+  const { items: decoratedItems, subtotal, total, servicesTotal } = calculateCartTotals(cartItems);
 
   const orderNumber = `AS-${Date.now().toString().slice(-6)}`;
 
