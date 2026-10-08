@@ -3847,6 +3847,14 @@ html[data-theme="dark"] .category-card.selected strong {
 .checkout-summary-list > div { flex-wrap: wrap; }
 .checkout-summary-list small { flex-basis: 100%; }
 
+/* The order summary sits on a dark panel in both themes. */
+.story-panel .checkout-summary-list span,
+.story-panel .checkout-summary-list strong {
+  color: #fffaf2;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
 .checkout-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
