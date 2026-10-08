@@ -2,6 +2,23 @@
 
 A React storefront for browsing antiques, managing a cart, and walking through a demonstration checkout.
 
+
+## Screenshots
+
+Captured from a local run of the React app using the built-in sample inventory. Checkout is a demonstration, not a live payment.
+
+### Storefront
+
+![Antique Shop storefront](docs/images/storefront.png)
+
+### Product catalog
+
+![Product catalog with sample antiques](docs/images/catalog.png)
+
+### Cart and pricing
+
+![Cart showing item price and packaging and insurance charges](docs/images/checkout.png)
+
 ## Run locally
 
 Use Node.js 22.12 or newer and npm. From the repository root:
